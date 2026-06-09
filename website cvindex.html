@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ayshe Dzhambazova — Product Designer</title>
+<style>
+  /* ── Reset & base ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #0d0d0d;
+    --surface:  #151515;
+    --border:   #222;
+    --accent:   #ff6340;
+    --accent2:  #ff8c6b;
+    --text:     #e8e6e1;
+    --muted:    #777;
+    --label:    #444;
+
+    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-body:    'DM Sans', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+
+  /* ── Google Fonts ── */
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  /* ── Nav ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5vw;
+    height: 60px;
+    background: rgba(13,13,13,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-name {
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+  .nav-name:hover { color: var(--text); }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent) !important;
+    border: 1px solid var(--accent);
+    padding: 0.4rem 1rem;
+    border-radius: 2px;
+    transition: background 0.2s, color 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--accent); color: var(--bg) !important; }
+
+  /* ── Hero ── */
+  #about {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 5vw 80px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  #about::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 55vw;
+    height: 55vw;
+    background: radial-gradient(circle, rgba(255,99,64,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-headline {
+    font-family: var(--font-display);
+    font-size: clamp(2.8rem, 7vw, 6.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    max-width: 14ch;
+    margin-bottom: 2rem;
+  }
+
+  .hero-headline em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-bio {
+    max-width: 56ch;
+    color: var(--muted);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--label);
+    text-transform: uppercase;
+    margin-bottom: 3rem;
+  }
+
+  .hero-meta span { color: var(--muted); }
+
+  .hero-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.7rem 1.4rem;
+    border-radius: 2px;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--bg);
+  }
+  .btn-primary:hover { background: var(--accent2); }
+
+  .btn-outline {
+    border-color: var(--border);
+    color: var(--muted);
+  }
+  .btn-outline:hover { border-color: var(--muted); color: var(--text); }
+
+  /* ── Section shell ── */
+  section {
+    padding: 100px 5vw;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 64px;
+  }
+
+  .section-index {
+    font-family: var(--font-display);
+    font-size: 5rem;
+    line-height: 1;
+    color: var(--border);
+    font-style: italic;
+    flex-shrink: 0;
+    user-select: none;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
+  /* ── Experience ── */
+  .experience-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .exp-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 2rem;
+    padding: 3rem 0;
+    border-top: 1px solid var(--border);
+    position: relative;
+  }
+
+  .exp-item:last-child { border-bottom: 1px solid var(--border); }
+
+  .exp-meta {
+    padding-top: 0.15rem;
+  }
+
+  .exp-date {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+  }
+
+  .exp-company {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    margin-bottom: 0.25rem;
+  }
+
+  .exp-location {
+    font-size: 0.75rem;
+    color: var(--label);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .exp-role {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+  }
+
+  .exp-desc {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.75;
+    margin-bottom: 1rem;
+    max-width: 60ch;
+  }
+
+  .exp-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .exp-bullets li {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.65;
+    padding-left: 1.2rem;
+    position: relative;
+  }
+
+  .exp-bullets li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 0.7rem;
+    top: 0.3rem;
+  }
+
+  .exp-challenge {
+    font-size: 0.75rem;
+    font-style: italic;
+    color: var(--label);
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .exp-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 1rem;
+  }
+
+  .tag {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--label);
+    border: 1px solid var(--border);
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+  }
+
+  /* ── Skills ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .skill-card {
+    background: var(--bg);
+    padding: 2rem;
+    transition: background 0.2s;
+  }
+
+  .skill-card:hover { background: var(--surface); }
+
+  .skill-card-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .skill-card-title {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+
+  .skill-list {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 2;
+  }
+
+  /* ── Education ── */
+  .edu-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .edu-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 2rem;
+    padding: 2.5rem 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .edu-item:last-child { border-bottom: 1px solid var(--border); }
+
+  .edu-date {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-top: 0.15rem;
+  }
+
+  .edu-degree {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.3rem;
+  }
+
+  .edu-school {
+    font-size: 0.85rem;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+  }
+
+  .edu-note {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* ── Contact ── */
+  #contact {
+    text-align: left;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 0.75rem 1.25rem;
+    border-radius: 2px;
+    transition: all 0.2s;
+  }
+
+  .contact-link:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .contact-tagline {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 4vw, 3rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    max-width: 20ch;
+    line-height: 1.2;
+    margin-top: 0;
+  }
+
+  .contact-tagline em { font-style: italic; color: var(--accent); }
+
+  /* ── Footer ── */
+  footer {
+    padding: 2rem 5vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    color: var(--label);
+    letter-spacing: 0.04em;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 700px) {
+    .nav-links { display: none; }
+
+    .exp-item,
+    .edu-item {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    .section-index { font-size: 3rem; }
+    .hero-headline { font-size: clamp(2.2rem, 10vw, 3.5rem); }
+
+    .skills-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── Scroll reveal ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-name" href="#about">Ayshe Dzhambazova</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a class="btn btn-outline nav-cta" href="mailto:design@ayshedzhambaz.com">Get in touch →</a>
+</nav>
+
+<!-- HERO -->
+<section id="about">
+  <p class="hero-eyebrow">Product Designer · Copenhagen</p>
+  <h1 class="hero-headline">Designing with <em>intent</em> and impact</h1>
+  <p class="hero-bio">
+    Holistic Product Designer who loves solving real problems for people. I work end-to-end — from framing the right problem through research and flows, to polished UI. I'm comfortable owning features in small teams, partnering closely with PMs and engineers, and turning intent into buildable, high-quality digital experiences used at scale.
+  </p>
+  <div class="hero-meta">
+    <span>Product Design</span>
+    <span>·</span>
+    <span>UX Research</span>
+    <span>·</span>
+    <span>Design Systems</span>
+    <span>·</span>
+    <span>Prototyping</span>
+  </div>
+  <div class="hero-links">
+    <a class="btn btn-primary" href="mailto:design@ayshedzhambaz.com">Say hello →</a>
+    <a class="btn btn-outline" href="https://www.linkedin.com/in/ayshedzhambazova" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="btn btn-outline" href="#experience">View work ↓</a>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header reveal">
+    <span class="section-index">01</span>
+    <h2 class="section-title">Experience</h2>
+  </div>
+
+  <div class="experience-list">
+
+    <div class="exp-item reveal">
+      <div class="exp-meta">
+        <div class="exp-date">Sep 2025 – Feb 2026</div>
+        <div class="exp-company">Ambler</div>
+        <div class="exp-location">Copenhagen</div>
+      </div>
+      <div class="exp-body">
+        <div class="exp-role">Product Designer — Fixed-term Consultant</div>
+        <p class="exp-desc">Ambler is a music metadata registration platform helping record labels register song releases and royalty splits correctly, delivering the necessary data to publishers.</p>
+        <ul class="exp-bullets">
+          <li>Designed end-to-end UI/UX from concept to production — full ownership of interfaces for core features serving labels and artists, establishing foundational design systems and creating 100+ high-fidelity screens.</li>
+          <li>Designed AI-driven product features and leveraged tools like Figma Make, Claude, and Lovable to accelerate ideation, prototyping, and design exploration.</li>
+          <li>Delivered investor-ready prototypes that secured 12 months of funding from Innovationsfonden.</li>
+        </ul>
+        <p class="exp-challenge">Challenge: business complexity, designing app and desktop dashboard interface in 3 months.</p>
+        <div class="exp-tags">
+          <span class="tag">End-to-end UX</span>
+          <span class="tag">Design Systems</span>
+          <span class="tag">AI Tools</span>
+          <span class="tag">Figma</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-meta">
+        <div class="exp-date">Feb 2023 – Mar 2025</div>
+        <div class="exp-company">Above Sports</div>
+        <div class="exp-location">Copenhagen</div>
+      </div>
+      <div class="exp-body">
+        <div class="exp-role">Product Designer</div>
+        <p class="exp-desc">Designed and launched new features for a B2B sponsorship analytics platform serving Danish football, handball, and corporate clients. Collaborated closely with product managers, data scientists, and developers.</p>
+        <ul class="exp-bullets">
+          <li>Facilitated 5 design workshops, stakeholder co-creation, and UX sprints — achieved 30% customer growth and increased satisfaction from under 50% to 80%.</li>
+          <li>Implemented a new design system and 30+ features (social analytics, reports, AI-powered footage analysis), aligning cross-functional teams on tight deadlines.</li>
+          <li>Acted as strategic advisor, bridging business goals, user research, and developer collaboration to accelerate releases and adoption.</li>
+        </ul>
+        <p class="exp-challenge">Challenge: addressing varied user needs, clear data visualization, business alignment.</p>
+        <div class="exp-tags">
+          <span class="tag">B2B SaaS</span>
+          <span class="tag">Data Visualization</span>
+          <span class="tag">Design Systems</span>
+          <span class="tag">Workshops</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-meta">
+        <div class="exp-date">Feb 2023 – Mar 2025</div>
+        <div class="exp-company">Above Sports</div>
+        <div class="exp-location">Copenhagen</div>
+      </div>
+      <div class="exp-body">
+        <div class="exp-role">Junior Product Designer</div>
+        <ul class="exp-bullets">
+          <li>Accomplished a comprehensive platform update: redesigned 6 pages and introduced 15 new features, enhancing user understanding of complex data through intuitive visualizations and iterative design based on feedback.</li>
+          <li>Acted as a bridge between business needs, user needs, and technical feasibility — from early discovery of data visualization issues through to delivery and launch.</li>
+        </ul>
+        <p class="exp-challenge">Challenge: the old system had cluttered and unclear data visualization, lack of design system.</p>
+      </div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-meta">
+        <div class="exp-date">Jun 2022 – Jan 2023</div>
+        <div class="exp-company">Social Tech Projects</div>
+        <div class="exp-location">Copenhagen</div>
+      </div>
+      <div class="exp-body">
+        <div class="exp-role">UX/UI Designer</div>
+        <p class="exp-desc">Worked closely with engineers, developers, and the lead designer across two key initiatives — a citizen engagement app and a bike lane assessment platform — involving data visualization, user research, interviews, and desktop research.</p>
+        <ul class="exp-bullets">
+          <li><strong style="color:var(--text)">WeSolve:</strong> Increased citizen participation in surveys by 30% through an improved app UI, achieving a 90% feedback submission rate and delivering richer insights into community challenges.</li>
+          <li><strong style="color:var(--text)">Road System:</strong> Contributed to an AI-powered bike lane assessment platform transforming raw footage into instant, map-ready insights. Responsible for visualizing data on the dashboard and maps — helped the team secure new investors and win startup awards.</li>
+        </ul>
+        <p class="exp-challenge">Challenge: meeting tight deadlines, visualizing complex data clearly.</p>
+        <div class="exp-tags">
+          <span class="tag">Civic Tech</span>
+          <span class="tag">Data Viz</span>
+          <span class="tag">User Research</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header reveal">
+    <span class="section-index">02</span>
+    <h2 class="section-title">Skills</h2>
+  </div>
+
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <div class="skill-card-label">Technical</div>
+      <div class="skill-card-title">Design & Research</div>
+      <div class="skill-list">
+        Product Design · Design Thinking · UX/UI<br>
+        User Research · User Journeys<br>
+        Wireframing · Prototyping<br>
+        Design Systems · Workshops<br>
+        Testing · Interviewing
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-card-label">Craft</div>
+      <div class="skill-card-title">Tools</div>
+      <div class="skill-list">
+        Figma · Figma Make · v0<br>
+        Lovable · Framer · Miro<br>
+        Claude · Perplexity · ChatGPT
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-card-label">People</div>
+      <div class="skill-card-title">Soft Skills</div>
+      <div class="skill-list">
+        Empathetic to users · User advocacy<br>
+        Proactive communicator<br>
+        Collaboration · Teamwork<br>
+        Critical thinking · Creativity<br>
+        Adaptability · Growth mindset
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-card-label">Languages</div>
+      <div class="skill-card-title">Spoken</div>
+      <div class="skill-list">
+        English — Fluent & technical<br>
+        Turkish — Native<br>
+        Bulgarian — Native<br>
+        Danish — Novice
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-header reveal">
+    <span class="section-index">03</span>
+    <h2 class="section-title">Education</h2>
+  </div>
+
+  <div class="edu-list">
+    <div class="edu-item reveal">
+      <div class="edu-date">Sep 2021 – Jun 2023</div>
+      <div>
+        <div class="edu-degree">MSc Information Studies</div>
+        <div class="edu-school">Aalborg University Copenhagen</div>
+        <div class="edu-note">Master's Thesis in collaboration with TV 2 Denmark</div>
+      </div>
+    </div>
+    <div class="edu-item reveal">
+      <div class="edu-date">Sep 2018 – Jan 2020</div>
+      <div>
+        <div class="edu-degree">Bachelor in Innovation and Entrepreneurship</div>
+        <div class="edu-school">Copenhagen Business Academy</div>
+        <div class="edu-note">Lyngby</div>
+      </div>
+    </div>
+    <div class="edu-item reveal">
+      <div class="edu-date">Aug 2016 – Jun 2018</div>
+      <div>
+        <div class="edu-degree">AP in Multimedia Design and Communication</div>
+        <div class="edu-school">Zealand Academy of Technologies and Business</div>
+        <div class="edu-note">Køge</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="contact-tagline reveal">Let's make something <em>worth using.</em></p>
+  <div class="contact-links reveal">
+    <a class="contact-link" href="mailto:design@ayshedzhambaz.com">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+      design@ayshedzhambaz.com
+    </a>
+    <a class="contact-link" href="https://www.linkedin.com/in/ayshedzhambazova" target="_blank" rel="noopener">
+      <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+      LinkedIn
+    </a>
+    <a class="contact-link" href="#" target="_blank" rel="noopener">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      Portfolio
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>Ayshe Dzhambazova · Copenhagen</span>
+  <span>Product Designer</span>
+</footer>
+
+<script>
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  revealEls.forEach(el => observer.observe(el));
+
+  // Stagger children inside the same parent
+  document.querySelectorAll('.skills-grid, .experience-list, .edu-list').forEach(container => {
+    container.querySelectorAll('.reveal').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 80}ms`;
+    });
+  });
+</script>
+</body>
+</html>
